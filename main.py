@@ -1,47 +1,60 @@
 import numpy as np
 import pandas as pd
-import re
-from tensorflow.keras.preprocessing.text import Tokenizer
+
 
 path = 'D:\\Data\\task\\01.txt'
 path2 = 'D:\\Data\\task\\02.txt'
-lst = []
-toklst = []
 
 
-def openfile(p):
+def openfile(p, x=None):
     with open(p, 'r', encoding='utf-8')as v:
+        if x is None:
+            lst = []
         for i in v:
             lst.append(i)
+    return lst
 
 
-def tok(v, v2=None):
+def table(v2=None):
+    oplst = openfile(path)
+    oplst2 = openfile(path2)
     if v2 is None:
         lst = []
-    for i in v:
+    for i in oplst:
         lst.append(i)
-    lst = np.array(lst)
-    tok = Tokenizer()
-    tok.fit_on_texts(lst)
-    txs = tok.texts_to_sequences(lst)
-    txs = list(filter(None, txs))
-    txs = np.array(txs)
-    for i in txs:
-        for j in i:
-            toklst.append(j)
-    return toklst
+    for j in oplst2:
+        lst.append(j)
+    return lst
 
 
-openfile(path)
-vec = tok(lst)
+def construction_Token_text1(v2=None):
+    c1 = 0
+    lst = []
+    oplst = openfile(path)
+    for i in table():
+        for j in oplst:
+            if i == j:
+                c1 = c1 + 1
+                lst.append(c1)
+    return lst
 
-openfile(path2)
-vec2 = tok(lst)
 
+def construction_Token_text2(v2=None):
+    c1 = 0
+    lst = []
+    oplst = openfile(path2)
+    for i in table():
+        for j in oplst:
+            if i == j:
+                c1 = c1 + 1
+                lst.append(c1)
+    return lst
 
+vec = construction_Token_text1()
+vec2 = construction_Token_text2()
 
-dot = sum(a * b for a, b in zip(vec, vec2))
-norm_a = sum(a * a for a in vec) ** 0.5
-norm_b = sum(b * b for b in vec2) ** 0.5
-cos_sim = dot / (norm_a * norm_b)
+dot = sum(a*b for a,b in zip(vec,vec2))
+norm_a = sum(a*a for a in vec) ** 0.5
+norm_b = sum(b*b for b in vec2) ** 0.5
+cos_sim = dot / (norm_a*norm_b)
 print('My version:', cos_sim)
