@@ -24,6 +24,7 @@ def table(v2=None):
         lst.append(i)
     for j in oplst2:
         lst.append(j)
+    lst = np.unique(lst).tolist()
     return lst
 
 
