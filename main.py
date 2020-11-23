@@ -38,11 +38,10 @@ vec = tok(lst)
 openfile(path2)
 vec2 = tok(lst)
 
-from sklearn.metrics.pairwise import cosine_similarity
+
 
 dot = sum(a * b for a, b in zip(vec, vec2))
 norm_a = sum(a * a for a in vec) ** 0.5
 norm_b = sum(b * b for b in vec2) ** 0.5
 cos_sim = dot / (norm_a * norm_b)
 print('My version:', cos_sim)
-# print('Scikit-Learn:', cosine_similarity([vec], [vec2]))
